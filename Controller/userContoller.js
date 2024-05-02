@@ -60,12 +60,12 @@ const getAuthData = expressAsyncHandler(async (req, res) => {
 // curd Operation
 const UserCreatedeata = expressAsyncHandler(async (req, res) => {
   const { title, body, location,CreatedBy } = req.body;
-//   const createdBy = req.user._id;
+  const createdBy = req.user.id;
   try {
     const response = await Curd.create({
       title,
       body,
-      CreatedBy:CreatedBy,
+      CreatedBy:createdBy,
       location,
     });
     res.json(response);
@@ -124,15 +124,13 @@ const delUserData = expressAsyncHandler(async (req, res) => {
 
 // count record
 const CountData=expressAsyncHandler(async(req,res)=>{
-    const createdBy = req.user._id;
+    // const CreatedBy = req.user.id;
     try {
-        
-        // Count active posts
-        const activeCount = await Curd.countDocuments({ createdBy, status: "active" });
-        const inactiveCount = await Curd.countDocuments({ createdBy,status: "Inactive" });
-        res.json({ activeCount, inactiveCount });
+        const activeCount=await Curd.find({status:"active"}).count()
+        const inactiveCount = await Curd.find({status:"Inactive"}).count()
+        res.json({ activeCount,inactiveCount });
       } catch (err) {
-        res.status(500).json({message:err});
+        res.status(500).json(err);
       }
 })
 

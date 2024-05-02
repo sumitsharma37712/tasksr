@@ -18,7 +18,7 @@ router.route('/api/deletedata/:id').delete(delUserData)
 
 // count router
 
-router.route('/api/count').get(verifyAuth, CountData)
+router.route('/api/count').get(verifyAuth,CountData)
 
 
 module.exports=router
